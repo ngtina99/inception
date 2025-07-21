@@ -1,0 +1,12 @@
+# services: nginx, wordpress, mariadb, bonus services.
+
+# volumes: data persistence.
+
+# networks: container communication.
+
+# build and image directives.
+
+# env_file or environment variables.
+
+# It connects and configures everything in one place, so you can docker-compose up.
+
