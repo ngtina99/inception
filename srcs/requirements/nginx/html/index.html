@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: white;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 3rem;
+	  padding: 1rem 2rem;
+    }
+
+    .menu a {
+      font-size: large;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .menu a:hover {
+      color: #a7a7a7;
+    }
+
+    main {
+      padding: 10rem;
+      text-align: center;
+    }
+
+    h1 {
+	  font-weight: 1;
+      font-size: 2rem;
+	  margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+
+  </style>
+  <script>
+    window.onload = function() {
+      // Function to get cookie value by name
+      function getCookie(name) {
+      console.log("cookie: " + document.cookie);
+      const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      }
+
+      // Check for user cookie
+      const userCookie = getCookie('user');
+      console.log("userCookie: " + userCookie);
+      if (userCookie) {
+        const userDisplay = document.createElement('div');
+        userDisplay.style.textAlign = 'center';
+        userDisplay.style.marginTop = '1rem';
+        userDisplay.style.fontSize = '1.2rem';
+        userDisplay.textContent = `Welcome back, ${userCookie}!`;
+        document.querySelector('main').appendChild(userDisplay);
+      }
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="logo">Inception</div>
+    <div class="menu">
+      <a href="/">Home</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/our-team.html">Our Team</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+	<img src="/images/home-main.jpg" alt="home main image" style="width: 300px; height: auto;" />
+    <h1>Welcome to My Inception Project</h1>
+  </main>
+</body>
+</html>
