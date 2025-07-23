@@ -1,0 +1,4 @@
+# Ignore SSL certificates and keys
+srcs/requirements/nginx/certs/
+*.crt
+*.key
