@@ -16,11 +16,46 @@ services:
   nginx:
     build: ./requirements/nginx
     image: nginx
+    networks:
+      - inception
     ports:
       - "443:443"
-#  wordpress:
-#    build: ./requirements/wordpress
-#    image: wordpress
-#  mariadb:
-#    build: ./requirements/mariadb
-#    image: mariadb
+    volumes:
+        - wordpress_data:/var/www/html
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    networks:
+      - inception
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
+  
+  mariadb:
+    image: mariadb:10.5
+    networks:
+      - inception
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    expose:
+      - "3306"
+
+volumes:
+  mariadb_data:
+  wordpress_data:
+
+networks:
+  inception:
+    driver: bridge
+
+#All containers on the inception network can communicate with each other using their service names (e.g., wordpress can connect to mariadb:3306).
+#but it's default
