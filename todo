@@ -1,0 +1,91 @@
+Your volumes will be available in the /home/login/data folder of the
+host machine using Docker. Of course, you have to replace the login
+with yours.
+  
+
+
+  volumes:
+      - /home/ngtin/data/wordpress:/var/www/html
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    networks:
+      - inception
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - /home/ngtin/data/wordpress:/var/www/html
+  
+  mariadb:
+    image: mariadb:10.5
+    networks:
+      - inception
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - /home/ngtin/data/mariadb:/var/lib/mysql
+
+
+    I have to REMOVE volumes part, because I will replace with mine in the sections
+
+#FOR PASSWORDS
+
+        volumes:
+      - /home/ngtin/data/wordpress:/var/www/html
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    networks:
+      - inception
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - /home/ngtin/data/wordpress:/var/www/html
+    secrets:
+      - wp_admin_pass
+
+  mariadb:
+    image: mariadb:10.5
+    networks:
+      - inception
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - /home/ngtin/data/mariadb:/var/lib/mysql
+    expose:
+      - "3306"
+    secrets:
+      - db_password
+      - db_root_password
+
+secrets:
+  wp_admin_pass:
+    file: ../secrets/credentials.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+
+
+    Update your entrypoint scripts (and any other scripts) to read passwords from the secrets files, e.g.:
+
+
+# TODO Read secrets from Docker secrets files if they exist
+if [ -f /run/secrets/wp_admin_pass ]; then
+  WP_ADMIN_PASS=$(cat /run/secrets/wp_admin_pass)
+fi
+if [ -f /run/secrets/db_password ]; then
+  WORDPRESS_DB_PASSWORD=$(cat /run/secrets/db_password)
+fi

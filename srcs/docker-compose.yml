@@ -48,7 +48,9 @@ services:
       - mariadb_data:/var/lib/mysql
     expose:
       - "3306"
+#Uses the official image, which runs mysqld in the foreground as PID 1.
 
+#Default location  /home/login/data.
 volumes:
   mariadb_data:
   wordpress_data:
