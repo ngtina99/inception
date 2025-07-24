@@ -3,4 +3,3 @@ srcs/requirements/nginx/certs/
 *.crt
 *.key
 
-.env
