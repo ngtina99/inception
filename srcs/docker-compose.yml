@@ -1,16 +1,4 @@
-# services: nginx, wordpress, mariadb, bonus services.
-
-# volumes: data persistence.
-
-# networks: container communication.
-
-# build and image directives.
-
-# env_file or environment variables.
-
-# It connects and configures everything in one place, so you can docker-compose up.
-
-
+version: '3.8'
 
 services:
   nginx:
@@ -21,7 +9,9 @@ services:
     ports:
       - "443:443"
     volumes:
-        - wordpress_data:/var/www/html
+      - /mnt/c/Users/ngtin/data/wordpress:/var/www/html
+    depends_on:
+       - wordpress
 
   wordpress:
     build: ./requirements/wordpress
@@ -35,8 +25,12 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - wordpress_data:/var/www/html
-  
+      - /mnt/c/Users/ngtin/data/wordpress:/var/www/html
+    secrets:
+      - wp_admin_pass
+      - wp_user_pass
+      - wordpress_db_pass
+
   mariadb:
     image: mariadb:10.5
     networks:
@@ -44,20 +38,25 @@ services:
     restart: always
     env_file:
       - .env
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mysql_pass
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - /mnt/c/Users/ngtin/data/mariadb:/var/lib/mysql
     expose:
       - "3306"
-#Uses the official image, which runs mysqld in the foreground as PID 1.
+    secrets:
+      - mysql_pass
 
-#Default location  /home/login/data.
-volumes:
-  mariadb_data:
-  wordpress_data:
+secrets:
+  wp_admin_pass:
+    file: ../secrets/wp_admin_pass.txt
+  wp_user_pass:
+    file: ../secrets/wp_user_pass.txt
+  wordpress_db_pass:
+    file: ../secrets/wordpress_db_pass.txt
+  mysql_pass:
+    file: ../secrets/mysql_pass.txt
 
 networks:
   inception:
     driver: bridge
-
-#All containers on the inception network can communicate with each other using their service names (e.g., wordpress can connect to mariadb:3306).
-#but it's default

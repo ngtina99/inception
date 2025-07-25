@@ -5,7 +5,7 @@ with yours.
 
 
   volumes:
-      - /home/ngtin/data/wordpress:/var/www/html
+      - /mnt/c/Users/ngtin/data/wordpress:/var/www/html
 
   wordpress:
     build: ./requirements/wordpress
@@ -19,7 +19,7 @@ with yours.
     depends_on:
       - mariadb
     volumes:
-      - /home/ngtin/data/wordpress:/var/www/html
+      - /mnt/c/Users/ngtin/data/wordpress:/var/www/html
   
   mariadb:
     image: mariadb:10.5
@@ -29,7 +29,7 @@ with yours.
     env_file:
       - .env
     volumes:
-      - /home/ngtin/data/mariadb:/var/lib/mysql
+      - /mnt/c/Users/ngtin/data/wordpress:/var/lib/mysql
 
 
     I have to REMOVE volumes part, because I will replace with mine in the sections

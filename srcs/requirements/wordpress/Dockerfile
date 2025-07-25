@@ -4,9 +4,12 @@ FROM debian:bullseye-slim
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y php-fpm php-mysql wget tar less && \
+    apt-get install -y php-fpm php-mysql wget tar less curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Set PHP-FPM to listen on TCP port 9000 instead of Unix socket
+RUN sed -i 's|^listen = .*|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
 
 # Download and extract WordPress
 RUN mkdir -p /var/www/html && \
