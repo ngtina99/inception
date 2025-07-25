@@ -11,6 +11,13 @@ RUN apt-get update && \
 # Set PHP-FPM to listen on TCP port 9000 instead of Unix socket
 RUN sed -i 's|^listen = .*|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
 
+RUN mkdir -p /run/php
+
+RUN mkdir -p /var/wwww/wordpress
+
+WORKDIR /var/wwww/wordpress
+
+
 # Download and extract WordPress
 RUN mkdir -p /var/www/html && \
     wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz && \

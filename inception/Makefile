@@ -14,7 +14,7 @@
 NAME=inception
 
 # Docker Compose command (can be changed to 'docker compose' if using newer versions)
-COMPOSE=docker-compose
+COMPOSE=docker compose
 
 # The main docker-compose file
 COMPOSE_FILE=./srcs/docker-compose.yml
@@ -42,7 +42,7 @@ clean:
 
 # Updated: Use the correct path to docker-compose.yml in srcs/ for 42 Inception subject compliance
 fclean: clean
-	docker-compose -f srcs/docker-compose.yml down -v --rmi all --remove-orphans
+	$(COMPOSE) -f $(COMPOSE_FILE) down -v --rmi all --remove-orphans
 	docker system prune -af
 	docker volume prune -f
 

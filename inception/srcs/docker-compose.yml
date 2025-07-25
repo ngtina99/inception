@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nginx:
     build: ./requirements/nginx
@@ -9,7 +7,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /mnt/c/Users/ngtin/data/wordpress:/var/www/html
+      - wordpress:/var/www/wordpress
     depends_on:
        - wordpress
 
@@ -25,7 +23,7 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - /mnt/c/Users/ngtin/data/wordpress:/var/www/html
+      - wordpress:/var/www/wordpress
     secrets:
       - wp_admin_pass
       - wp_user_pass
@@ -41,7 +39,7 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mysql_pass
     volumes:
-      - /mnt/c/Users/ngtin/data/mariadb:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     expose:
       - "3306"
     secrets:
@@ -60,3 +58,7 @@ secrets:
 networks:
   inception:
     driver: bridge
+
+volumes:
+  wordpress:
+  mariadb:

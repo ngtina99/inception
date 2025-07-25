@@ -10,7 +10,7 @@ RUN apt-get update && \
 # Copy your nginx config and certificates (see below)
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./certs /etc/nginx/certs
-COPY ./html /var/www/html
+#COPY ./html /var/www/html
 
 EXPOSE 443
 
