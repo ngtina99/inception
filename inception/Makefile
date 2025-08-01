@@ -6,7 +6,7 @@
 #    By: thuy-ngu <thuy-ngu@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/09 00:00:00 by thuy-ngu          #+#    #+#              #
-#    Updated: 2025/07/23 14:55:53 by thuy-ngu         ###   ########.fr        #
+#    Updated: 2025/08/01 19:40:48 by thuy-ngu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ fclean: clean
 	docker system prune -af
 	docker volume prune -f
 
+
 # Generate self-signed SSL certificates for NGINX
 certs:
 	@if [ ! -f srcs/requirements/nginx/certs/server.key ] || [ ! -f srcs/requirements/nginx/certs/server.crt ]; then \
@@ -57,5 +58,9 @@ certs:
 			-subj "/C=PT/ST=Lisbon/L=Lisbon/O=42/OU=Student/CN=localhost"; \
 	fi
 
+
+logs:
+	$(COMPOSE) -f $(COMPOSE_FILE) logs -f
+
 # Declare phony targets (not actual files)
-.PHONY: all up down re clean fclean
+.PHONY: all up down re clean fclean logs
