@@ -21,7 +21,7 @@ until mysql -h"$WORDPRESS_DB_HOST" -u"$WORDPRESS_DB_USER" -p"$WORDPRESS_DB_PASSW
   sleep 2
 done
 
-cd /var/www/html
+cd /var/www/wordpress
 
 # Restrict forbidden admin usernames !!!
 if [[ "$WP_ADMIN_USER" =~ [Aa]dmin|[Aa]dministrator ]]; then

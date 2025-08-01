@@ -13,20 +13,18 @@ RUN sed -i 's|^listen = .*|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
 
 RUN mkdir -p /run/php
 
-RUN mkdir -p /var/wwww/wordpress
+RUN mkdir -p /var/www/wordpress
 
-WORKDIR /var/wwww/wordpress
-
+WORKDIR /var/www/wordpress
 
 # Download and extract WordPress
-RUN mkdir -p /var/www/html && \
-    wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz && \
-    tar -xzf /tmp/wordpress.tar.gz -C /var/www/html --strip-components=1 && \
+RUN wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz && \
+    tar -xzf /tmp/wordpress.tar.gz -C /var/www/wordpress --strip-components=1 && \
     rm /tmp/wordpress.tar.gz
 
 # Set permissions
 #Add WP-CLI and a startup script:
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/wordpress
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
